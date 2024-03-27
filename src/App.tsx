@@ -9,10 +9,10 @@ import Graph from "./components/graph/Graph";
 import { useEffect } from "react";
 
 const envVariablesSchema = z.object({
-  VITE_NEO4J_HOST: z.string().min(1),
-  VITE_NEO4J_PORT: z.string().min(1),
-  VITE_NEO4J_USER: z.string().min(1),
-  VITE_NEO4J_PASSWORD: z.string().min(1),
+  REACT_APP_NEO4J_HOST: z.string().min(1),
+  REACT_APP_NEO4J_PORT: z.string().min(1),
+  REACT_APP_NEO4J_USER: z.string().min(1),
+  REACT_APP_NEO4J_PASSWORD: z.string().min(1),
 });
 
 // const InvalidWrapper = styled.div`

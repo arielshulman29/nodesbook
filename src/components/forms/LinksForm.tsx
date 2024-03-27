@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useReadCypher, useLazyWriteCypher } from "use-neo4j";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { z } from "zod";
 import { MultiSelect } from "./components/MultiSelect";
 import { type Option } from "../../types/option";
@@ -28,6 +28,7 @@ const personOptionSchema = z.object({
 export type PersonOption = z.infer<typeof personOptionSchema>;
 
 export default function LinksForm() {
+  const navigate = useNavigate();
   const { id: personId } = useParams();
 
   const [friendsOptions, setFriendsOptions] = useState<Option[]>([]);
@@ -41,7 +42,9 @@ export default function LinksForm() {
     `MATCH(person:Person WHERE person.id<>$id) return collect(person{.id,.name,.company}) as people`,
     { id: personId }
   );
-  const [createFriends] = useLazyWriteCypher(getMergeQuery("FRIEND_OF"));
+  const [createFriends, { error: creationError }] = useLazyWriteCypher(
+    getMergeQuery("FRIEND_OF")
+  );
 
   useEffect(() => {
     getAllPeople({ id: personId });
@@ -71,6 +74,7 @@ export default function LinksForm() {
         id: personId,
         ids: selectedFriends.map(({ value }) => value),
       });
+      if (!creationError) navigate("/graph");
     } catch (err) {
       console.log(err);
     }

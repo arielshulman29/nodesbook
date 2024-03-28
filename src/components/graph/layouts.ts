@@ -25,23 +25,11 @@ export const layouts: Record<string, any> = {
       mergeEdges: false,
     },
   },
-  fcose: {
-    name: "fcose",
-    animate: true,
-  },
   cose: {
     name: "cose",
     animate: true,
-  },
-
-  cola: {
-    name: "cola",
-    animate: true,
-    maxSimulationTime: 40000,
-  },
-  dagre: {
-    name: "dagre",
-    animate: true,
+    spacing: 40,
+    nodeDimensionsIncludeLabels: true,
   },
 };
 

@@ -106,7 +106,7 @@ export default function Graph() {
   const options = {
     elements,
     style,
-    layout: layouts.circle,
+    layout: layouts.cose,
   };
 
   return (

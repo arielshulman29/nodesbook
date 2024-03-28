@@ -99,6 +99,7 @@ export default function PersonForm() {
   return (
     <form onSubmit={handleSubmit}>
       <div>please reply in english</div>
+      <br />
       {LabelAndInput("name", handleChange)}
       {LabelAndInput("email", handleChange)}
       {LabelAndInput("age", handleChange)}
@@ -127,6 +128,7 @@ export default function PersonForm() {
           : undefined
       )}
       {LabelAndInput("company", handleChange)}
+      <br />
       <button type="submit">Save</button>
       <br />
       {errorMessage ? <ErrorMessage message={errorMessage} /> : null}

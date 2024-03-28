@@ -1,31 +1,12 @@
-# Create React App
+# NodesBook social graph 1.0.0
 
-This directory is a brief example of a [Create React App](https://github.com/facebook/create-react-app) site that can be deployed to Vercel with zero configuration.
+This directory is from a live demo at a Nodejs-IL meetup from 27.3.2024
+in order to set it up yourself list up for Neo4j AuraDB
+[https://neo4j.com/cloud/platform/aura-graph-database/?utm_source=Google&utm_medium=PaidSearch&utm_campaign=Evergreenutm_content=APAC-Search-SEMBrand-Evergreen-None-SEM-SEM-NonABM&utm_term=auradb&utm_adgroup=auradb&gad_source=1&gclid=Cj0KCQjwqpSwBhClARIsADlZ_TmF6OkjpMeGHXqsz6AELcWzla_ULuzNFmJKfJrJHcXyS105KZ2TySEaApZ_EALw_wcB]
 
-## Deploy Your Own
+env example:
 
-Deploy your own Create React App project with Vercel.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/create-react-app&template=create-react-app)
-
-_Live Example: https://create-react-template.vercel.app/_
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes. You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.
-
-It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
+REACT_APP_NEO4J_PORT=xxxx
+REACT_APP_NEO4J_USER=xxxx
+REACT_APP_NEO4J_PASSWORD=xxxxxxxxxxxx
+REACT_APP_NEO4J_HOST=xxxxxxx.databases.neo4j.io

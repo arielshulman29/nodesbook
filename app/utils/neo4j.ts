@@ -28,9 +28,11 @@ export const extractResultsArrayFromNeo4jRecords = <ItemType>(
 export const extractResultsObjectFromNeo4jRecords = <ItemType>(
   records: any,
   schema: z.Schema<ItemType>
-): ItemType | null => {
+): ItemType => {
   const typedRecords = neo4jObjectRecordSchema.safeParse(records);
-  if (!typedRecords.success) return null;
+  if (!typedRecords.success) {
+    throw new Error("Error in validating data");
+  }
   const result: Record<string, unknown> = {};
   const { _fields: values, _fieldLookup: keysToValueIndex } =
     typedRecords.data[0];
@@ -41,5 +43,5 @@ export const extractResultsObjectFromNeo4jRecords = <ItemType>(
   if (validatedResult.success) {
     return validatedResult.data;
   }
-  return null;
+  throw new Error("Error invalid data");
 };

@@ -1,6 +1,10 @@
 import { NewPerson, Person, personSchema } from "@/app/schemas/Person";
 import neo4j, { Driver } from "neo4j-driver";
-import { extractResultsObjectFromNeo4jRecords } from "../utils/neo4j";
+import {
+  extractResultsObjectFromNeo4jRecords,
+  extractResultsObjectFromNeo4jRecordsbyKey,
+  extractFirstErrorMessageFromSchemaError,
+} from "../utils/neo4j";
 
 const driver = neo4j.driver(
   process.env.NEO4J_HOST!,
@@ -23,7 +27,11 @@ export class PersonRepository {
     };
   };
 
-  async createPerson(person: NewPerson): Promise<Person | null | undefined> {
+  async createPerson(
+    person: NewPerson
+  ): Promise<
+    { success: true; id: string } | { success: false; error: string }
+  > {
     const { session } = await this.#getSession();
     const txc = session.beginTransaction();
     try {
@@ -31,25 +39,29 @@ export class PersonRepository {
         `CREATE (n:Person)
         SET n.id=apoc.create.uuid(), n.age=$age, n.company=$company, n.name=$name, 
           n.email=$email, n.stack=$stack, n.livingTown=$livingTown, n.hometown=$hometown
-        return properties(n)`,
+        return properties(n) AS person`,
         { ...person }
       );
-      const validatedResult = extractResultsObjectFromNeo4jRecords(
+      const validatedResult = extractResultsObjectFromNeo4jRecordsbyKey(
         personResult.records,
+        "person",
         personSchema
       );
-      if (!validatedResult) {
-        throw new Error("Something went wrong");
-      } else {
+      if (validatedResult.success) {
         await txc.commit();
+        return { success: true, id: validatedResult.data.id };
+      } else {
+        await txc.rollback();
+        let error = extractFirstErrorMessageFromSchemaError(
+          validatedResult.error.message
+        );
+        return { success: false, error };
       }
-      return validatedResult;
     } catch (error) {
-      console.log(error);
-      await txc.rollback();
-      console.log("rolled back");
+      throw new Error("Something went wrong");
     }
   }
+
   async createFriends(personId: string, friendsIds: string[]) {
     const { session } = await this.#getSession();
     // run statement in a transaction

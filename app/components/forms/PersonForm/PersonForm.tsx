@@ -90,13 +90,12 @@ export default function PersonForm() {
   const [formData, setFormData] = useState<Partial<NewPerson> | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async () => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
     const validatedPerson = newPersonSchema.safeParse(formData);
     if (validatedPerson.success) {
       const response = await handleSave(validatedPerson.data);
-      if (isValidUuid(response)) {
-        router.push(`person/${response}`);
-      }
+      if (isValidUuid(response)) router.push(`person/${response}`);
     } else {
       setErrorMessage(validatedPerson.error.message);
     }

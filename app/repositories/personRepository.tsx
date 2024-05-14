@@ -73,7 +73,7 @@ export class PersonRepository {
         WITH person, collect(linkedPerson) as linkedPeopleWithNulls
         WITH person, [linkedPerson in linkedPeopleWithNulls WHERE linkedPerson.id IS NOT NULL] as linkedPeople
         UNWIND linkedPeople as linkedPerson
-        MERGE(person)-[:FRIEND_OF]-(linkedPerson)
+        MERGE(person)-[:FRIEND_OF]->(linkedPerson)
         return collect(linkedPerson) as linkedPeople`,
         {
           id: personId,

@@ -1,14 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { MultiSelect } from "../components/MultiSelect";
 import { type Option } from "../../../types/option";
-// import { extractResultsArrayFromNeo4jRecords } from "../../utils/neo4j";
 import { MultiValue } from "react-select";
 import { Person } from "@/app/schemas/Person";
 import { saveFriends } from "./api";
-import styled from "styled-components";
 import { FormContainer } from "../components/styled";
 
 const personOptionSchema = z.object({
@@ -29,12 +27,14 @@ export default function LinksForm({ people, personId }: LinksFormProps) {
   const [selectedFriends, setSelectedFriends] = useState<Option[]>([]);
 
   useEffect(() => {
-    const options: Option[] = people.map((person) => ({
-      label: `${person.name} (${person.company})`,
-      value: person.email,
-    }));
+    const options: Option[] = people
+      .filter((person) => person.id !== personId)
+      .map((person) => ({
+        label: `${person.name} (${person.company})`,
+        value: person.id,
+      }));
     setFriendsOptions(options);
-  }, [people]);
+  }, [people.length]);
 
   const handlePersonSelect = (options: MultiValue<Option>) => {
     setSelectedFriends([...options]);
@@ -43,7 +43,7 @@ export default function LinksForm({ people, personId }: LinksFormProps) {
   const handleSave = async () => {
     const selectedIds = selectedFriends.map(({ value }) => value);
     await saveFriends(personId, selectedIds);
-    router.push("/graph");
+    router.push(`person/${personId}/graph`);
   };
 
   return (

@@ -5,6 +5,7 @@ import {
   extractResultsObjectFromNeo4jRecordsbyKey,
   extractFirstErrorMessageFromSchemaError,
 } from "../utils/neo4j";
+import { Society, societySchema } from "../schemas/SocietyGraph";
 
 const driver = neo4j.driver(
   process.env.NEO4J_HOST!,
@@ -112,5 +113,27 @@ export class PersonRepository {
       );
     });
     return tsx.records[0].toObject()["people"];
+  }
+  async getSocietyGraph(): Promise<Society> {
+    const { session } = await this.#getSession();
+    // run statement in a transaction
+    const tsx = await session.executeRead((tsx) => {
+      return tsx.run(
+        `
+       MATCH(person:Person)
+       OPTIONAL MATCH(person)-[link:FRIEND_OF]->(person2:Person)
+       WITH collect(distinct {source:startNode(link).id, target:endNode(link).id}) as links_with_nulls,
+            collect(distinct properties(person)) as nodes
+       RETURN nodes, [link in links_with_nulls WHERE link.source IS NOT NULL] as links`
+      );
+    });
+    const graphData = extractResultsObjectFromNeo4jRecords<Society>(
+      tsx.records,
+      societySchema
+    );
+    if (graphData.success) {
+      return graphData.data;
+    }
+    return { nodes: [], links: [] };
   }
 }

@@ -42,6 +42,19 @@ export const extractResultsObjectFromNeo4jRecords = <ItemType>(
   const validatedResult = schema.safeParse(result);
   if (validatedResult.success) {
     return validatedResult.data;
+export const extractFirstErrorMessageFromSchemaError = (
+  schemaErrorMessage: z.ZodError<any>["message"]
+): string => {
+  try {
+    const parsedErrorAray = JSON.parse(schemaErrorMessage);
+    if (
+      Array.isArray(parsedErrorAray) &&
+      parsedErrorAray.length &&
+      typeof parsedErrorAray[0]["message"] == "string"
+    )
+      return parsedErrorAray[0]["message"] as string;
+    else throw new Error("zod error are not an array");
+  } catch (err) {
+    throw new Error("invalid");
   }
-  throw new Error("Error invalid data");
 };

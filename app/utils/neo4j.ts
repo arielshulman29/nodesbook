@@ -34,8 +34,8 @@ export const extractResultsObjectFromNeo4jRecords = <ItemType>(
     throw new Error("Error in validating data");
   }
   const result: Record<string, unknown> = {};
-  const { _fields: values, _fieldLookup: keysToValueIndex } =
-    typedRecords.data[0];
+  const [{ _fields: values, _fieldLookup: keysToValueIndex }] =
+    typedRecords.data;
   Object.entries(keysToValueIndex).forEach(([key, index]) => {
     if (values[index]) result[key] = values[index];
   });

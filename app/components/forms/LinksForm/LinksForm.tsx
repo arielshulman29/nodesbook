@@ -7,7 +7,7 @@ import { type Option } from "../../../types/option";
 import { MultiValue } from "react-select";
 import { Person } from "@/app/schemas/Person";
 import { saveFriends } from "./api";
-import { FormContainer } from "../components/styled";
+import { FormContainer, StyledButton } from "../components/styled";
 
 const personOptionSchema = z.object({
   id: z.string(),
@@ -42,8 +42,8 @@ export default function LinksForm({ people, personId }: LinksFormProps) {
 
   const handleSave = async () => {
     const selectedIds = selectedFriends.map(({ value }) => value);
-    await saveFriends(personId, selectedIds);
-    router.push(`person/${personId}/graph`);
+    if (selectedIds.length) await saveFriends(personId, selectedIds);
+    router.push(`/person/${personId}/graph`);
   };
 
   return (
@@ -55,9 +55,9 @@ export default function LinksForm({ people, personId }: LinksFormProps) {
         options={friendsOptions}
         onChange={handlePersonSelect}
       />
-      <button type="submit" onClick={handleSave}>
-        Save
-      </button>
+      <StyledButton type="submit" onClick={handleSave}>
+        NEXT
+      </StyledButton>
     </FormContainer>
   );
 }

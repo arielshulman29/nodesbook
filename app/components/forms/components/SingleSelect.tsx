@@ -6,6 +6,7 @@ export type SingleSelectProps<OptionsTypes> = {
   name: string;
   onChange: (selected: SingleValue<OptionsTypes>) => void;
   selectedOption?: OptionsTypes;
+  placeholder?: string;
 };
 
 export function SingleSelect<OptionsTypes>({
@@ -13,11 +14,13 @@ export function SingleSelect<OptionsTypes>({
   name,
   selectedOption,
   onChange,
+  placeholder,
 }: SingleSelectProps<OptionsTypes>): JSX.Element {
   return (
     <StyledContainer>
       <Select
         instanceId={name}
+        placeholder={placeholder}
         closeMenuOnSelect
         isSearchable
         onChange={onChange}

@@ -6,6 +6,7 @@ export type MultiSelectProps<OptionsTypes> = {
   selectedOptions: OptionsTypes[];
   name: string;
   onChange: (newValue: MultiValue<OptionsTypes>) => void;
+  placeholder?: string;
 };
 
 export function MultiSelect<OptionsTypes>({
@@ -13,11 +14,13 @@ export function MultiSelect<OptionsTypes>({
   name,
   selectedOptions,
   onChange,
+  placeholder,
 }: MultiSelectProps<OptionsTypes>) {
   return (
     <StyledContainer>
       <Select
         instanceId={name}
+        placeholder={placeholder}
         isMulti
         isSearchable
         onChange={onChange}

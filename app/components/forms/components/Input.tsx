@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { PartialPerson } from "../PersonForm/PersonForm";
 import { Person } from "../../../schemas/Person";
-import { StyledContainer } from "./styled";
 
 export type InputProps = {
   id: keyof Person;
@@ -19,6 +18,7 @@ const StyledInput = styled.input`
   line-height: 40px;
   border-radius: 5px;
   width: 100%;
+  text-indent: 10px;
 `;
 
 export default function Input({

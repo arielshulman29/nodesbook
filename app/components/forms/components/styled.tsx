@@ -14,3 +14,13 @@ export const FormContainer = styled.div`
   flex-direction: column;
   gap: 2%;
 `;
+
+export const StyledButton = styled.button`
+  padding: 1% 0;
+  font-size: 0.9rem;
+  border-style: solid;
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: transparent;
+  border-radius: 8px;
+`;

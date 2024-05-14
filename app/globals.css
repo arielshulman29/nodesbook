@@ -2,13 +2,10 @@
   --primary: rgb(37, 42, 48);
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-
+  
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 240, 219, 220;
-  --background-end-rgb: 255, 200, 200;
+  --background-start-rgb: 150, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
@@ -43,7 +40,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary: rgb(37, 42, 48);
+    --primary: rgb(255, 255, 255);
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;

@@ -15,23 +15,14 @@ import { SingleSelect } from "../components/SingleSelect";
 import { stack } from "../../../data/stacks";
 import { handleSave } from "./api";
 import styled from "styled-components";
-import { FormContainer } from "../components/styled";
+import { FormContainer, StyledButton } from "../components/styled";
+import { extractFirstErrorMessageFromSchemaError } from "@/app/utils/neo4j";
 
 const InputRow = styled.div`
   width: 100%;
 `;
 
-const StyledButton = styled.button`
-  padding: 1% 0;
-  background-color: transparent;
-  color: var(--primary);
-  font-size: 0.9rem;
-  border-style: solid;
-  border-color: var(--primary);
-  border-radius: 8px;
-`;
-
-function LabelAndInput(
+function renderInput(
   id: keyof Person,
   handleChange: (data: PartialPerson) => void,
   type?: InputProps["type"]
@@ -59,9 +50,9 @@ function renderSingleSelect(
 ): JSX.Element {
   return (
     <>
-      <label>{capitalize(name)}</label>
       <SingleSelect
         options={options}
+        placeholder={capitalize(name)}
         name={name}
         selectedOption={selectedOption}
         onChange={(value) => {
@@ -97,7 +88,9 @@ export default function PersonForm() {
       const response = await handleSave(validatedPerson.data);
       if (isValidUuid(response)) router.push(`person/${response}`);
     } else {
-      setErrorMessage(validatedPerson.error.message);
+      setErrorMessage(
+        extractFirstErrorMessageFromSchemaError(validatedPerson.error.message)
+      );
     }
   };
 
@@ -112,9 +105,9 @@ export default function PersonForm() {
   return (
     <form onSubmit={handleSubmit}>
       <FormContainer>
-        {LabelAndInput("name", handleChange)}
-        {LabelAndInput("email", handleChange)}
-        {LabelAndInput("age", handleChange)}
+        {renderInput("name", handleChange)}
+        {renderInput("email", handleChange)}
+        {renderInput("age", handleChange)}
         <InputRow>
           {renderSingleSelect(
             "hometown",
@@ -145,8 +138,8 @@ export default function PersonForm() {
               : undefined
           )}
         </InputRow>
-        {LabelAndInput("company", handleChange)}
-        <StyledButton type="submit">SAVE</StyledButton>
+        {renderInput("company", handleChange)}
+        <StyledButton type="submit">NEXT</StyledButton>
         {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
       </FormContainer>
     </form>

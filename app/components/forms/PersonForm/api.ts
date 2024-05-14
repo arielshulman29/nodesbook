@@ -3,11 +3,14 @@
 import { PersonRepository } from "@/app/repositories/personRepository";
 import { NewPerson } from "@/app/schemas/Person";
 
-export const handleSave = async (data: NewPerson) => {
+export const handleSave = async (
+  data: NewPerson
+): Promise<
+  { success: true; id: string } | { success: false; error: string }
+> => {
   try {
     const personRepository = new PersonRepository();
-    const id = await personRepository.createPerson(data);
-    return id;
+    return await personRepository.createPerson(data);
   } catch (err) {
     throw new Error("Something went wrong");
   }

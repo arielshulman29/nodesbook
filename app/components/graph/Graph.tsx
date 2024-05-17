@@ -6,6 +6,7 @@ import { capitalize } from "../../utils/strings";
 import { Society } from "@/app/schemas/SocietyGraph";
 import cola from "cytoscape-cola";
 import { layout, styleSheet } from "./config";
+import Signup from "./buttons/Signup/Signup";
 
 cytoscape.use(cola);
 
@@ -41,11 +42,14 @@ export default function Graph({ society }: GraphProps) {
   const elements = useMemo(() => createElementsFromSociety(society), [society]);
 
   return (
-    <CytoscapeComponent
-      style={{ width: "100%", height: "100vh" }}
-      elements={elements}
-      layout={layout}
-      stylesheet={styleSheet}
-    />
+    <>
+      <Signup />
+      <CytoscapeComponent
+        style={{ width: "100%", height: "100vh" }}
+        elements={elements}
+        layout={layout}
+        stylesheet={styleSheet}
+      />
+    </>
   );
 }

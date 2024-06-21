@@ -1,0 +1,93 @@
+.container {
+  align-items: center;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px;
+  display: flex;
+  gap: 20px;
+  background-color: rgb(var(--tile-start-rgb));
+  box-shadow: 0px 2px 6px rgba(80, 80, 80, 0.25);
+	@media (max-width: 900px) {
+    flex-wrap: wrap;
+    justify-items: center;
+  }
+}
+.itemContainer{
+  display: flex;
+  width:100%;	
+  justify-items: flex-start;
+  @media (max-width: 900px) {
+    justify-items: center;
+    gap: 20px;
+    width:100%;
+  }
+}
+
+.label {
+  color: var(--main);
+  white-space: 'nowrap';
+}
+
+.buttonRound {
+  border-radius: 50%;
+  color: var(--main);
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.fullScreen {
+  height: 100%;
+  padding: 1%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2%;
+}
+
+
+.wrapper {
+  background-color: white;
+  border-radius: 8px;
+  color: var(--main);
+  border: 1px solid var(--main);
+  padding: 8px;
+  cursor: pointer;
+  box-shadow: 0px 2px 6px rgba(80, 80, 80, 0.25);
+  white-space: nowrap;
+}
+
+.buttonRound:hover {
+  background-color: #16abff33;
+}
+
+.flex{  
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    gap:10px;
+}
+
+.fixedToBottom {
+  height:30vh;
+  position:fixed;
+  bottom:0;
+  left:0;
+  z-index:12;
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.scroll {
+  display:flex;
+  flex-direction: column;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+.hideOnMobile {
+  @media (max-width: 900px) {
+    visibility: hidden;
+  }
+}

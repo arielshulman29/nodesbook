@@ -1,0 +1,9 @@
+.button{
+    padding: 1%;
+    color: var(--primary);
+    background-color: transparent;
+    border-radius: 4px;
+}
+.button:hover {
+    background-color: var(--main-hover);
+}

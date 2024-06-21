@@ -1,6 +1,6 @@
 import React from "react";
-import LinksForm from "../../components/forms/LinksForm/LinksForm";
-import { PersonRepository } from "../../repositories/personRepository";
+import LinksForm from "../../_components/forms/LinksForm/LinksForm";
+import { PersonRepository } from "../../_repositories/personRepository";
 
 export default async function PersonPage({
   params: { personId },

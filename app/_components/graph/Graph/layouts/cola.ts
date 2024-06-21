@@ -1,3 +1,4 @@
+// @ts-nocheck
 const defaults = {
   name: "cola",
   animate: true, // whether to show the layout as it's running

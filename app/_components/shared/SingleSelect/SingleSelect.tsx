@@ -33,7 +33,7 @@ export function SingleSelect<OptionsTypes>({
       placeholder={placeholder}
       closeMenuOnSelect
       isSearchable
-      onChange={onChange}
+      onChange={(newValue) => onChange(newValue as OptionsTypes)}
       className="basic-single"
       classNamePrefix="select"
       defaultValue={selectedOption}

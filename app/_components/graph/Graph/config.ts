@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const layout = {
   name: "concentric",
 
@@ -35,7 +36,7 @@ export const layout = {
   }, // transform a given node position. Useful for changing flow direction in discrete layouts
 };
 
-export const styleSheet = [
+export const styleSheet: cytoscape.Stylesheet[] = [
   {
     selector: "node",
     style: {
@@ -49,12 +50,12 @@ export const styleSheet = [
       "text-valign": "center",
       "text-halign": "center",
       "overlay-padding": "6px",
-      "z-index": "10",
+      // "z-index": "10",
       //text props
       "text-outline-color": "var(--main)",
       "text-outline-width": "1px",
       color: "white",
-      fontSize: 10,
+      // fontSize: 10,
     },
   },
   {

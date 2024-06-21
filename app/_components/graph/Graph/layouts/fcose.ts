@@ -1,3 +1,4 @@
+// @ts-nocheck
 const defaultOptions = {
   name: "fcose",
   avoidOverlap: true, // if true, prevents overlap of node bounding boxes

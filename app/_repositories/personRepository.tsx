@@ -99,7 +99,7 @@ export class PersonRepository {
     return tsx.records[0].toObject()["people"];
   }
 
-  async getFriendsByLevel(personId: string, level: number): Promise<Person[]> {
+  async getFriendsSubgraph(personId: string, level: number): Promise<Person[]> {
     const { session } = await this.#getSession();
     const tsx = await session.executeRead((tsx) => {
       return tsx.run<{ friendsCircles: Array<Node<number, Person>> }>(

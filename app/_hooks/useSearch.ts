@@ -10,9 +10,7 @@ export default function useSearch() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  console.log(searchParams);
   const backupIsActive = isBackup(searchParams);
-  console.log(backupIsActive);
 
   function setSearch(newParams: SearchParams) {
     const params = new URLSearchParams(searchParams);
@@ -33,7 +31,6 @@ export default function useSearch() {
   function replaceSearch(newParams: SearchParams) {
     const params = new URLSearchParams();
     if (backupIsActive) {
-      console.log(backupIsActive);
       params.set("backup", "backup");
     }
     newParams.forEach(({ key, value }) => {

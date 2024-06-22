@@ -39,7 +39,7 @@ async function getGraphPropsFromSearchParams(
   }
   if (props.algorithm == Algorithms.subgraph) {
     const personRepository = new PersonRepository(isBackup(searchParams));
-    const friends = await personRepository.getFriendsByLevel(
+    const friends = await personRepository.getFriendsSubgraph(
       props.root,
       Number(props.level)
     );

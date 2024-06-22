@@ -5,7 +5,7 @@ import { Popover } from "@/app/_components/shared/Popover/Popover";
 import { CodeIcon } from "@radix-ui/react-icons";
 import { Box, Label, Paragraph } from "@/app/_components/shared/styled";
 import { toCamelCase } from "@/app/_utils/strings";
-import { explanations } from "./explanations";
+import { code, explanations } from "./explanations";
 import { isBackup } from "@/app/_utils/neo4j";
 
 export type AlgorithmExplainerProps = {
@@ -23,22 +23,11 @@ export function AlgorithmExplainer({
   ) {
     const repo = new PersonRepository(isBackup(searchParams));
     const selectedAlgorithm = algorithm as Algorithms;
-    const getCode = (algorithm: Algorithms) => {
-      if (algorithm === Algorithms.betweenessCentrality) {
-        return repo.calculateBSScoring.toString();
-      }
-      if (algorithm === Algorithms.shortestPath) {
-        return repo.getShortestPath.toString();
-      }
-      if (algorithm === Algorithms.subgraph) {
-        return repo.getFriendsByLevel.toString();
-      }
-      return "";
-    };
+
     return (
       <Popover icon={<CodeIcon />}>
         <Box>
-          <Code text={getCode(selectedAlgorithm)} language="js" />
+          <Code text={code[selectedAlgorithm]} language="js" />
           <Label>
             <h3>{toCamelCase(algorithm)}</h3>
           </Label>

@@ -11,7 +11,7 @@ export async function SubgraphPopover({
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   const personRepository = new PersonRepository(isBackup(searchParams));
-  const friendsByLevel = await personRepository.getFriendsByLevel(
+  const friendsByLevel = await personRepository.getFriendsSubgraph(
     root,
     Number(level)
   );

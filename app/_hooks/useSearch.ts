@@ -1,4 +1,5 @@
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { isBackup } from "../_utils/neo4j";
 
 export type SearchParams = {
   key: string;
@@ -9,6 +10,7 @@ export default function useSearch() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const backupIsActive = isBackup(searchParams);
 
   function setSearch(newParams: SearchParams) {
     const params = new URLSearchParams(searchParams);
@@ -37,8 +39,11 @@ export default function useSearch() {
         }
       }
     });
+    if (backupIsActive) {
+      params.set("backup", "true");
+    }
     replace(`${pathname}?${params.toString()}`);
   }
 
-  return { setSearch, searchParams, replaceSearch };
+  return { setSearch, searchParams, replaceSearch, backupIsActive };
 }

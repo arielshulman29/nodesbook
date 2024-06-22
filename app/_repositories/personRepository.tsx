@@ -5,15 +5,23 @@ import {
   extractFirstErrorMessageFromSchemaError,
 } from "../_utils/neo4j";
 import { Society } from "../_schemas/SocietyGraph";
-const driver = neo4j.driver(
+const backupDriver = neo4j.driver(
   process.env.NEO4J_HOST ?? "",
   neo4j.auth.basic("neo4j", process.env.NEO4J_PASSWORD ?? "")
+);
+const driver = neo4j.driver(
+  process.env.NEO4J_REAL_HOST ?? "",
+  neo4j.auth.basic("neo4j", process.env.NEO4J_REAL_PASSWORD ?? "")
 );
 
 export class PersonRepository {
   #driver: Driver;
-  constructor() {
-    this.#driver = driver;
+  constructor(backup: boolean) {
+    if (backup) {
+      this.#driver = driver;
+    } else {
+      this.#driver = backupDriver;
+    }
   }
 
   #getSession = async () => {

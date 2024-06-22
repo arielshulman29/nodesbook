@@ -7,7 +7,7 @@ export default async function PersonPage({
 }: {
   params: { personId: string };
 }) {
-  const personRepository = new PersonRepository();
+  const personRepository = new PersonRepository(isBackup(searchParams));
   const people = await personRepository.getAllPeople();
   return <LinksForm people={people} personId={personId} />;
 }

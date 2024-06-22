@@ -3,7 +3,7 @@ import { BcScoringParams } from "../searchParamsSchemas";
 import { PeoplePopup } from "@/app/_components/shared/PeoplePopup/PeoplePopup";
 
 export async function BcScoringPopover({ friendliest }: BcScoringParams) {
-  const personRepository = new PersonRepository();
+  const personRepository = new PersonRepository(isBackup(searchParams));
   const people = await personRepository.getAllPeople();
   const friendliestPeople = people
     .filter((person) => friendliest.includes(person.id))

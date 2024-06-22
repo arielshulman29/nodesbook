@@ -37,7 +37,7 @@
 
 .label {
   color: var(--main);
-  white-space: 'nowrap';
+  white-space: nowrap;
 }
 
 .buttonRound {

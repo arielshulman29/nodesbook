@@ -1,9 +1,5 @@
+import { ReadonlyURLSearchParams } from "next/navigation";
 import { z } from "zod";
-
-// we need to do this because Neo4j has terrible TypeScript :( no one is perfect?
-const neo4jSingleArrayRecordSchema = z.array(
-  z.object({ _fields: z.array(z.array(z.unknown())).length(1) })
-);
 
 const neo4jObjectRecordSchema = z.array(
   z.object({
@@ -11,36 +7,6 @@ const neo4jObjectRecordSchema = z.array(
     _fieldLookup: z.record(z.number()),
   })
 );
-
-export const extractResultsArrayFromNeo4jRecords = <ItemType>(
-  records: any,
-  schema: z.Schema<ItemType>
-): ItemType[] => {
-  const typedRecords = neo4jSingleArrayRecordSchema.safeParse(records);
-  if (!typedRecords.success) return [];
-  const results = typedRecords.data;
-  return results[0]._fields[0].filter((result) => {
-    const validation = schema.safeParse(result);
-    return validation.success;
-  }) as ItemType[];
-};
-
-export const extractResultsObjectFromNeo4jRecords = <ItemType>(
-  records: any,
-  schema: z.Schema<ItemType>
-): z.SafeParseReturnType<ItemType, ItemType> => {
-  const typedRecords = neo4jObjectRecordSchema.safeParse(records);
-  if (!typedRecords.success) {
-    throw new Error("Error in validating data");
-  }
-  const result: Record<string, unknown> = {};
-  const { _fields: values, _fieldLookup: keysToValueIndex } =
-    typedRecords.data[0];
-  Object.entries(keysToValueIndex).forEach(([key, index]) => {
-    if (values[index]) result[key] = values[index];
-  });
-  return schema.safeParse(result);
-};
 
 export const extractResultsObjectFromNeo4jRecordsbyKey = <ItemType>(
   records: any,
@@ -76,3 +42,12 @@ export const extractFirstErrorMessageFromSchemaError = (
     throw new Error("invalid");
   }
 };
+
+export const isBackup = (
+  searchParams?: Record<string, unknown> | ReadonlyURLSearchParams
+) =>
+  !!(
+    searchParams &&
+    "backup" in searchParams &&
+    searchParams["backup"] === "backup"
+  );

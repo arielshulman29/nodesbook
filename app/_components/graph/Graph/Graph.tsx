@@ -20,6 +20,7 @@ type Element = {
     target?: string;
     main?: string;
     selected?: string;
+    hidden?: string;
   };
 };
 
@@ -27,20 +28,37 @@ const createElementsFromSociety = (
   society: Society,
   mainUserId?: string,
   selectesUsersIds?: string[],
-  drawPathBetweenSelected?: boolean
+  drawPathBetweenSelected?: boolean,
+  filterNonSelected?: boolean
 ): Element[] => {
   const elements: Element[] = [];
+  const filteredElementsIds = new Set();
   society.nodes.forEach((node) => {
+    const hidden = `${
+      filterNonSelected &&
+      !selectesUsersIds?.includes(node.id) &&
+      mainUserId !== node.id
+    }`;
+
+    if (hidden === "false") filteredElementsIds.add(node.id);
     elements.push({
       data: {
         id: node.id,
         label: `${capitalize(node.name)}`,
         main: `${node.id === mainUserId}`,
         selected: `${selectesUsersIds?.includes(node.id)}`,
+        hidden,
       },
     });
   });
   society.links.forEach((link) => {
+    const hidden = `${
+      filterNonSelected &&
+      !(
+        filteredElementsIds.has(link.source) &&
+        filteredElementsIds.has(link.target)
+      )
+    }`;
     elements.push({
       data: {
         id: `${link.source}${link.target}`,
@@ -51,6 +69,7 @@ const createElementsFromSociety = (
           selectesUsersIds?.includes(link.source) &&
           selectesUsersIds?.includes(link.target)
         }`,
+        hidden,
       },
     });
   });
@@ -62,6 +81,7 @@ export type GraphProps = {
   drawPathBetweenSelected?: boolean;
   mainUserId?: string;
   selectedUsersIds?: string[];
+  filterNonSelected?: boolean;
 };
 
 export default function Graph({
@@ -69,6 +89,7 @@ export default function Graph({
   mainUserId,
   selectedUsersIds,
   drawPathBetweenSelected = true,
+  filterNonSelected = false,
 }: GraphProps) {
   const { setSearch, searchParams } = useSearch();
   const cyRef = useRef<cytoscape.Core | undefined>();
@@ -78,9 +99,16 @@ export default function Graph({
         society,
         mainUserId,
         selectedUsersIds,
-        drawPathBetweenSelected
+        drawPathBetweenSelected,
+        filterNonSelected
       ),
-    [society, mainUserId, selectedUsersIds, drawPathBetweenSelected]
+    [
+      society,
+      mainUserId,
+      selectedUsersIds,
+      drawPathBetweenSelected,
+      filterNonSelected,
+    ]
   );
   const layout = fcoseLayout;
   layout.nodeRepulsion = () => 300 * society.nodes.length;

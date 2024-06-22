@@ -2,6 +2,7 @@
   --primary: rgb(37, 42, 48);
   --main:#214167;
   --main-hover:#16abff33;
+  --background: #080420;
   --max-width: 1100px;
   --border-radius: 12px;
 
@@ -42,7 +43,7 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: #080420;
+  background-color: var(--background);
 }
 
 a {

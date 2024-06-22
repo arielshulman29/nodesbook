@@ -13,10 +13,10 @@ export function AlgorithmPopupRenderer({
   return (
     <>
       {props.data?.algorithm === Algorithms.subgraph && (
-        <SubgraphPopover {...props.data} />
+        <SubgraphPopover searchParams={searchParams} {...props.data} />
       )}
       {props.data?.algorithm === Algorithms.shortestPath && (
-        <ShortestPathPopover {...props.data} />
+        <ShortestPathPopover searchParams={searchParams} {...props.data} />
       )}
       {props.data?.algorithm === Algorithms.betweenessCentrality && (
         <BcScoringPopover {...props.data} />

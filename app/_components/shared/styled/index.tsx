@@ -37,6 +37,3 @@ export const ScrollableSmall = ({ children }: { children: ReactNode }) => (
 export const FullScreen = ({ children }: { children: ReactNode }) => (
   <span className={styles.fullScreen}>{children}</span>
 );
-export const HideOnMobile = ({ children }: { children: ReactNode }) => (
-  <span className={styles.hideOnMobile}>{children}</span>
-);

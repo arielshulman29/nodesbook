@@ -9,7 +9,7 @@ export const handleSave = async (
   { success: true; id: string } | { success: false; error: string }
 > => {
   try {
-    const personRepository = new PersonRepository();
+    const personRepository = new PersonRepository(isBackup(searchParams));
     return await personRepository.createPerson(data);
   } catch (err) {
     throw new Error("Something went wrong");

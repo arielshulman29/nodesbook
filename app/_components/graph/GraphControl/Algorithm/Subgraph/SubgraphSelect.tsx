@@ -4,6 +4,7 @@ import useSearch from "@/app/_hooks/useSearch";
 import PeopleSelect from "../../../../shared/PeopleSelect/PeopleSelect";
 import { Person } from "@/app/_schemas/Person";
 import { SubgraphParams } from "../searchParamsSchemas";
+import { ToggleSearch } from "@/app/_components/shared/Toggle/Toggle";
 
 const options = [
   { value: "1", label: "First circle" },
@@ -34,6 +35,7 @@ export function SubgraphSelect({ people, level, root }: SubgraphSelectProps) {
         }
         options={options}
       />
+      <ToggleSearch items={["all", "subgraph"]} label="show" />
     </>
   );
 }

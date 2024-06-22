@@ -6,7 +6,7 @@ import {
   type Person,
 } from "../../../_schemas/Person";
 import { capitalize } from "../../../_utils/strings";
-import { ErrorMessage } from "../components/ErrorMessage";
+import { ErrorMessage } from "../components/ErrorMessage/ErrorMessage";
 import Input, { type InputProps } from "../components/Input/Input";
 import { useRouter } from "next/navigation";
 import { IsraelCities } from "../../../_data/cities";

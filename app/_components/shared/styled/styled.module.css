@@ -56,6 +56,7 @@
   display: flex;
   flex-direction: column;
   gap: 2%;
+  overflow-y: hidden;
 }
 
 
@@ -103,10 +104,4 @@
   flex-direction: column;
   overflow-y:auto;
   overflow-x:hidden;
-}
-
-.hideOnMobile {
-  @media (max-width: 900px) {
-    visibility: hidden;
-  }
 }

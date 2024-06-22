@@ -5,6 +5,7 @@ import { AlgorithmPopupRenderer } from "./_components/graph/GraphControl/Algorit
 import { searchParamsParser } from "./_components/graph/GraphControl/Algorithm/searchParamsSchemas";
 import { Algorithms } from "./_components/graph/GraphControl/Algorithm/AlgorithmPicker/algorithms";
 import { isBackup } from "./_utils/neo4j";
+import { FullScreen } from "./_components/shared/styled";
 
 async function getGraphPropsFromSearchParams(
   searchParams: Record<string, string | string[] | undefined>
@@ -62,7 +63,7 @@ export default async function GraphPage({
   const society = await personRepository.getSocietyGraph();
   const graphProps = await getGraphPropsFromSearchParams(searchParams);
   return (
-    <>
+    <FullScreen>
       <GraphControl searchParams={searchParams} />
       <AlgorithmPopupRenderer searchParams={searchParams} />
       <Graph
@@ -70,6 +71,6 @@ export default async function GraphPage({
         key={`${isBackup(searchParams)}`}
         {...graphProps}
       />
-    </>
+    </FullScreen>
   );
 }

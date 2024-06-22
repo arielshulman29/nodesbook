@@ -74,16 +74,12 @@ export default function PersonForm() {
   const router = useRouter();
   const [formData, setFormData] = useState<Partial<NewPerson> | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const { searchParams } = useSearch();
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const validatedPerson = newPersonSchema.safeParse(formData);
     if (validatedPerson.success) {
-      const response = await handleSave(
-        validatedPerson.data,
-        isBackup(searchParams)
-      );
+      const response = await handleSave(validatedPerson.data, false);
       if (response.success) router.push(`person/${response.id}`);
     } else {
       const error =

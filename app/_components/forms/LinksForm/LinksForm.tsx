@@ -8,6 +8,8 @@ import { MultiValue } from "react-select";
 import { Person } from "@/app/_schemas/Person";
 import { saveFriends } from "./api";
 import { Container, FullScreen } from "../../shared/styled";
+import { isBackup } from "@/app/_utils/neo4j";
+import useSearch from "@/app/_hooks/useSearch";
 
 const personOptionSchema = z.object({
   id: z.string(),
@@ -22,6 +24,7 @@ export type LinksFormProps = {
 };
 
 export default function LinksForm({ people, personId }: LinksFormProps) {
+  const { searchParams } = useSearch();
   const router = useRouter();
   const [friendsOptions, setFriendsOptions] = useState<Option[]>([]);
   const [selectedFriends, setSelectedFriends] = useState<Option[]>([]);
@@ -42,7 +45,8 @@ export default function LinksForm({ people, personId }: LinksFormProps) {
 
   const handleSave = async () => {
     const selectedIds = selectedFriends.map(({ value }) => value);
-    if (selectedIds.length) await saveFriends(personId, selectedIds);
+    if (selectedIds.length)
+      await saveFriends(personId, selectedIds, isBackup(searchParams));
     router.push(`/`);
   };
 

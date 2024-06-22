@@ -19,7 +19,7 @@ export function AlgorithmPopupRenderer({
         <ShortestPathPopover searchParams={searchParams} {...props.data} />
       )}
       {props.data?.algorithm === Algorithms.betweenessCentrality && (
-        <BcScoringPopover {...props.data} />
+        <BcScoringPopover searchParams={searchParams} {...props.data} />
       )}
     </>
   );

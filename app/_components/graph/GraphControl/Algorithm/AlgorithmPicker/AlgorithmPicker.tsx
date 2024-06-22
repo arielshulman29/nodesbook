@@ -3,8 +3,10 @@ import { SingleSelect } from "@/app/_components/shared/SingleSelect/SingleSelect
 import { Algorithms } from "./algorithms";
 import useSearch from "@/app/_hooks/useSearch";
 import { toCamelCase } from "@/app/_utils/strings";
+import { ReactNode, useCallback } from "react";
+import { Popover } from "@/app/_components/shared/Popover/Popover";
 
-export function AlgorithmPicker() {
+export function AlgorithmPicker({ children }: { children: ReactNode }) {
   const { replaceSearch, searchParams } = useSearch();
 
   const selectedAlgorithm = Object.values(Algorithms).find((algorithm) =>
@@ -16,18 +18,31 @@ export function AlgorithmPicker() {
     label: toCamelCase(algorithm),
   }));
 
+  const AlgorithmSelect = useCallback(
+    () => (
+      <SingleSelect
+        name="algorithm"
+        selectedOption={
+          selectedAlgorithm
+            ? {
+                value: selectedAlgorithm,
+                label: toCamelCase(selectedAlgorithm),
+              }
+            : undefined
+        }
+        onChange={(selected) => {
+          replaceSearch([{ key: "algorithm", value: selected?.value }]);
+        }}
+        options={options}
+      />
+    ),
+    [selectedAlgorithm]
+  );
+
   return (
-    <SingleSelect
-      name="algorithm"
-      selectedOption={
-        selectedAlgorithm
-          ? { value: selectedAlgorithm, label: toCamelCase(selectedAlgorithm) }
-          : undefined
-      }
-      onChange={(selected) => {
-        replaceSearch([{ key: "algorithm", value: selected?.value }]);
-      }}
-      options={options}
-    />
+    <Popover>
+      <AlgorithmSelect />
+      {children}
+    </Popover>
   );
 }

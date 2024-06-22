@@ -16,6 +16,9 @@ export const StyledWrapper = ({ children }: { children: ReactNode }) => (
 export const Flex = ({ children }: { children: ReactNode }) => (
   <div className={styles.flex}>{children}</div>
 );
+export const Row = ({ children }: { children: ReactNode }) => (
+  <div className={styles.flexRow}>{children}</div>
+);
 export const FixedToBottom = ({ children }: { children: ReactNode }) => (
   <div className={styles.fixedToBottom}>{children}</div>
 );

@@ -3,11 +3,16 @@ import * as PopoverComponent from "@radix-ui/react-popover";
 import { MixerHorizontalIcon, Cross2Icon } from "@radix-ui/react-icons";
 import "./styles.css";
 
-export const Popover = ({ children }: { children: ReactNode }) => (
+export type PopoverProps = {
+  children: ReactNode;
+  icon: ReactNode;
+};
+
+export const Popover = ({ children, icon }: PopoverProps) => (
   <PopoverComponent.Root>
     <PopoverComponent.Trigger asChild>
       <button className="IconButton" aria-label="Update dimensions">
-        <MixerHorizontalIcon />
+        {icon}
       </button>
     </PopoverComponent.Trigger>
     <PopoverComponent.Portal>

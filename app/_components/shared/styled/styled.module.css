@@ -22,6 +22,18 @@
     width:100%;
   }
 }
+.box{
+ width:50vw;
+ padding:5%;
+ @media (max-width: 900px) {
+   width:100vw;
+ }
+}
+
+.pharagraph {
+  color: var(--main);
+  white-space: pre-line;
+} 
 
 .label {
   color: var(--main);

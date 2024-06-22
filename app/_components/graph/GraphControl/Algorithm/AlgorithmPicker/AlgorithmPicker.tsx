@@ -5,6 +5,7 @@ import useSearch from "@/app/_hooks/useSearch";
 import { toCamelCase } from "@/app/_utils/strings";
 import { ReactNode, useCallback } from "react";
 import { Popover } from "@/app/_components/shared/Popover/Popover";
+import { IconJarLogoIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
 
 export function AlgorithmPicker({ children }: { children: ReactNode }) {
   const { replaceSearch, searchParams } = useSearch();
@@ -40,7 +41,7 @@ export function AlgorithmPicker({ children }: { children: ReactNode }) {
   );
 
   return (
-    <Popover>
+    <Popover icon={<MixerHorizontalIcon />}>
       <AlgorithmSelect />
       {children}
     </Popover>

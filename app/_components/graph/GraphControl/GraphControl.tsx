@@ -4,7 +4,6 @@ import { PersonRepository } from "@/app/_repositories/personRepository";
 import { AlgorithmPicker } from "./Algorithm/AlgorithmPicker/AlgorithmPicker";
 import { AlgorithmRenderer } from "./Algorithm/AlgorithmSelectRenderer/AlgorithmSelectRenderer";
 import { Container, Flex, ItemContainer, Row } from "../../shared/styled";
-import { Popover } from "../../shared/Popover/Popover";
 import { AlgorithmExplainer } from "./Algorithm/AlgorithmExplainer/AlgorithmExplainer";
 
 export async function GraphControl({

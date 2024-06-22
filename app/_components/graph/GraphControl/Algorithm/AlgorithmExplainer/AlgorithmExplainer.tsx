@@ -2,6 +2,10 @@ import { PersonRepository } from "@/app/_repositories/personRepository";
 import { Algorithms } from "../AlgorithmPicker/algorithms";
 import { Code } from "./CodeClientWarapper";
 import { Popover } from "@/app/_components/shared/Popover/Popover";
+import { CodeIcon } from "@radix-ui/react-icons";
+import { Box, Label, Paragraph } from "@/app/_components/shared/styled";
+import { toCamelCase } from "@/app/_utils/strings";
+import { explanations } from "./explanations";
 
 export type AlgorithmExplainerProps = {
   algorithm?: string;
@@ -27,8 +31,15 @@ export function AlgorithmExplainer({ algorithm }: AlgorithmExplainerProps) {
       return "";
     };
     return (
-      <Popover>
-        <Code text={getCode(selectedAlgorithm)} language="js" />
+      <Popover icon={<CodeIcon />}>
+        <Box>
+          <Code text={getCode(selectedAlgorithm)} language="js" />
+          <Label>
+            <h3>{toCamelCase(algorithm)}</h3>
+          </Label>
+          <br />
+          <Paragraph>{explanations[selectedAlgorithm]}</Paragraph>
+        </Box>
       </Popover>
     );
   }

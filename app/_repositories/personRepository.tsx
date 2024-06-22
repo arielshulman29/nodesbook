@@ -1,10 +1,8 @@
 import { NewPerson, Person, personSchema } from "@/app/_schemas/Person";
 import neo4j, { Driver, Node } from "neo4j-driver";
-import {
-  extractResultsObjectFromNeo4jRecordsbyKey,
-  extractFirstErrorMessageFromSchemaError,
-} from "../_utils/neo4j";
+import { extractResultsObjectFromNeo4jRecordsbyKey } from "../_utils/neo4j";
 import { Society } from "../_schemas/SocietyGraph";
+
 const backupDriver = neo4j.driver(
   process.env.NEO4J_HOST ?? "",
   neo4j.auth.basic("neo4j", process.env.NEO4J_PASSWORD ?? "")
@@ -18,9 +16,9 @@ export class PersonRepository {
   #driver: Driver;
   constructor(backup: boolean) {
     if (backup) {
-      this.#driver = driver;
-    } else {
       this.#driver = backupDriver;
+    } else {
+      this.#driver = driver;
     }
   }
 
@@ -44,7 +42,7 @@ export class PersonRepository {
     try {
       const personResult = await txc.run<Person & { id: string }>(
         `CREATE (n:Person)
-        SET n.id=apoc.create.uuid(), n.age=$age, n.company=$company, n.name=$name, 
+        SET n.id=apoc.create.uuid(), n.generation=$generation, n.company=$company, n.name=$name, 
           n.email=$email, n.stack=$stack, n.livingTown=$livingTown, n.hometown=$hometown
         return properties(n) AS person`,
         { ...person }
@@ -59,13 +57,11 @@ export class PersonRepository {
         return { success: true, id: validatedResult.data.id };
       } else {
         await txc.rollback();
-        let error = extractFirstErrorMessageFromSchemaError(
-          validatedResult.error.message
-        );
-        return { success: false, error };
+        let error = validatedResult.error.format();
+        return { success: false, error: error?.name?._errors[0] ?? "" };
       }
     } catch (error) {
-      throw new Error("Something went wrong");
+      throw Error("Something went wrong");
     }
   }
 
@@ -100,9 +96,7 @@ export class PersonRepository {
         `MATCH(person:Person) RETURN collect(properties(person)) as people`
       );
     });
-    return tsx.records[0]
-      .toObject()
-      ["people"].filter((person) => personSchema.safeParse(person).success);
+    return tsx.records[0].toObject()["people"];
   }
 
   async getFriendsByLevel(personId: string, level: number): Promise<Person[]> {

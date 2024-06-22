@@ -12,10 +12,11 @@ import { useRouter } from "next/navigation";
 import { IsraelCities } from "../../../_data/cities";
 import { stack } from "../../../_data/stacks";
 import { handleSave } from "./api";
-import { extractFirstErrorMessageFromSchemaError } from "@/app/_utils/neo4j";
 import { SingleSelect } from "../../shared/SingleSelect/SingleSelect";
 import { Container, FullScreen } from "../../shared/styled";
 import { Generations, generationsMap } from "@/app/_data/generations";
+import { isBackup } from "@/app/_utils/neo4j";
+import useSearch from "@/app/_hooks/useSearch";
 
 function renderInput(
   id: keyof Person,
@@ -73,17 +74,27 @@ export default function PersonForm() {
   const router = useRouter();
   const [formData, setFormData] = useState<Partial<NewPerson> | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const { searchParams } = useSearch();
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const validatedPerson = newPersonSchema.safeParse(formData);
     if (validatedPerson.success) {
-      const response = await handleSave(validatedPerson.data);
+      const response = await handleSave(
+        validatedPerson.data,
+        isBackup(searchParams)
+      );
       if (response.success) router.push(`person/${response.id}`);
     } else {
-      setErrorMessage(
-        extractFirstErrorMessageFromSchemaError(validatedPerson.error.message)
-      );
+      const error =
+        validatedPerson.error.format()?.name?._errors[0] ??
+        validatedPerson.error.format()?.email?._errors[0] ??
+        validatedPerson.error.format()?.generation?._errors[0] ??
+        validatedPerson.error.format()?.hometown?._errors[0] ??
+        validatedPerson.error.format()?.livingTown?._errors[0] ??
+        validatedPerson.error.format()?.stack?._errors[0] ??
+        validatedPerson.error.format()?.company?._errors[0];
+      setErrorMessage(`${error}` ?? "Sorry Something went wrong");
     }
   };
 
@@ -105,7 +116,7 @@ export default function PersonForm() {
           handleChange,
           Object.values(Generations).map((gen) => ({
             value: gen,
-            label: generationsMap[gen as Generations].join("-"),
+            label: `${gen} ${generationsMap[gen as Generations].join("-")}`,
           })),
           formData?.generation
             ? { value: formData.generation, label: formData.generation }

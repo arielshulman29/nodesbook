@@ -13,12 +13,18 @@ const englishRegex = new RegExp(/^[a-zA-Z0-9]/);
 
 export const personSchema = z.object({
   id: z.string(getInvalidErrors("id")).uuid(),
-  name: z.string(getInvalidErrors("name")).min(3).regex(englishRegex),
-  email: z.string().email(),
-  generation: z.nativeEnum(Generations),
-  hometown: z.enum(IsraelCities, getInvalidErrors("living town")),
+  name: z
+    .string(getInvalidErrors("name"))
+    .min(3, "name must be at least 3 letters")
+    .regex(englishRegex, "name must be in English"),
+  email: z.string(getInvalidErrors("email")).email(),
+  generation: z.nativeEnum(Generations, getInvalidErrors("generation")),
+  hometown: z.enum(IsraelCities, getInvalidErrors("hometown")),
   livingTown: z.enum(IsraelCities, getInvalidErrors("living town")),
-  company: z.string(getInvalidErrors("company")).min(3),
+  company: z
+    .string(getInvalidErrors("company"))
+    .min(3, "company name must be at least 3 letters")
+    .regex(englishRegex, "company name must be in English"),
   stack: z.enum(stack, getInvalidErrors("stack")),
 });
 

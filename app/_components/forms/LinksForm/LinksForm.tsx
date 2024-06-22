@@ -47,7 +47,7 @@ export default function LinksForm({ people, personId }: LinksFormProps) {
     const selectedIds = selectedFriends.map(({ value }) => value);
     if (selectedIds.length)
       await saveFriends(personId, selectedIds, isBackup(searchParams));
-    router.push(`/`);
+    router.push("/");
   };
 
   return (
@@ -63,7 +63,7 @@ export default function LinksForm({ people, personId }: LinksFormProps) {
         <button
           type="submit"
           onClick={handleSave}
-          style={{ background: "none" }}
+          style={{ background: "none", border: "none" }}
         >
           NEXT
         </button>

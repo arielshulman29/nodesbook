@@ -26,22 +26,12 @@ export const extractResultsObjectFromNeo4jRecordsbyKey = <ItemType>(
   return schema.safeParse(result[recordsKeyToValidate]);
 };
 
-export const extractFirstErrorMessageFromSchemaError = (
-  schemaErrorMessage: z.ZodError<any>["message"]
-): string => {
-  try {
-    const parsedErrorAray = JSON.parse(schemaErrorMessage);
-    if (
-      Array.isArray(parsedErrorAray) &&
-      parsedErrorAray.length &&
-      typeof parsedErrorAray[0]["message"] == "string"
-    )
-      return parsedErrorAray[0]["message"] as string;
-    else throw new Error("zod error are not an array");
-  } catch (err) {
-    throw new Error("invalid");
-  }
-};
+// export const extractFirstErrorMessageFromSchemaError = <SchemaType>(
+//   schemaErrorMessage: z.SafeParseError<SchemaType>
+// ): string => {
+//   const errors = schemaErrorMessage.error.format();
+//   const errors=Object.
+// };
 
 export const isBackup = (
   searchParams?: Record<string, unknown> | ReadonlyURLSearchParams

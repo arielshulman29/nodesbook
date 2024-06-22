@@ -103,7 +103,7 @@ export default function PersonForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} autoComplete="off">
       <FullScreen>
         {renderInput("name", handleChange)}
         {renderInput("email", handleChange)}

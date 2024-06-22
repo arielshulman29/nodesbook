@@ -34,6 +34,7 @@ async function getGraphPropsFromSearchParams(
       mainUserId: props.friendliest[0],
       selectedUsersIds: props.friendliest.slice(1),
       drawPathBetweenSelected: false,
+      filterNonSelected: searchParams["show"] === "subgraph",
     };
   }
   if (props.algorithm == Algorithms.subgraph) {

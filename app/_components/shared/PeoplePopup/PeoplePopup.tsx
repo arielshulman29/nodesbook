@@ -9,14 +9,16 @@ import {
   Flex,
   Label,
 } from "../styled";
+import { Popover } from "../Popover/Popover";
+import { PersonIcon } from "@radix-ui/react-icons";
 
 export type PeoplePopupProps = { people: Person[] };
 
 export async function PeoplePopup({ people }: PeoplePopupProps) {
   return (
     <FixedToBottom>
-      <ItemContainer>
-        <Container>
+      <Popover icon={<PersonIcon />}>
+        <ItemContainer>
           <Flex>
             {people.length ? (
               people.map((person) => (
@@ -31,8 +33,8 @@ export async function PeoplePopup({ people }: PeoplePopupProps) {
               <Label>No people Found</Label>
             )}
           </Flex>
-        </Container>
-      </ItemContainer>
+        </ItemContainer>
+      </Popover>
     </FixedToBottom>
   );
 }

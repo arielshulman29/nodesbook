@@ -22,7 +22,7 @@ export async function GraphControl({
           <Signup />
           <Counter label="nodes" count={society.nodes.length} />
           <Counter label="links" count={society.links.length} />
-          <ToggleSearch label="backup" items={["backup"]} replace />
+          <ToggleSearch label="backup" items={["real", "backup"]} replace />
         </ItemContainer>
       </Container>
       <AlgorithmPicker>

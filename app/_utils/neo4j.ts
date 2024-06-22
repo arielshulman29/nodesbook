@@ -26,18 +26,17 @@ export const extractResultsObjectFromNeo4jRecordsbyKey = <ItemType>(
   return schema.safeParse(result[recordsKeyToValidate]);
 };
 
-// export const extractFirstErrorMessageFromSchemaError = <SchemaType>(
-//   schemaErrorMessage: z.SafeParseError<SchemaType>
-// ): string => {
-//   const errors = schemaErrorMessage.error.format();
-//   const errors=Object.
-// };
-
 export const isBackup = (
   searchParams?: Record<string, unknown> | ReadonlyURLSearchParams
-) =>
-  !!(
+) => {
+  if (searchParams instanceof ReadonlyURLSearchParams) {
+    return (
+      searchParams.has("backup") && searchParams.get("backup") === "backup"
+    );
+  }
+  return !!(
     searchParams &&
     "backup" in searchParams &&
     searchParams["backup"] === "backup"
   );
+};

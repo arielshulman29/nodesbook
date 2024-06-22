@@ -89,7 +89,6 @@
 }
 
 .fixedToBottom {
-  height:30vh;
   position:fixed;
   bottom:0;
   left:0;

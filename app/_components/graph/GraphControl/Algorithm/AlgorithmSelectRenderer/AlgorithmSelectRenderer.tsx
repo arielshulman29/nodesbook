@@ -2,6 +2,7 @@ import { ShortestPathSelect } from "../ShortestPath/ShortestPathSelect";
 import { SubgraphSelect } from "../Subgraph/SubgraphSelect";
 import { Algorithms } from "../AlgorithmPicker/algorithms";
 import { Person } from "@/app/_schemas/Person";
+import { ToggleSearch } from "@/app/_components/shared/Toggle/Toggle";
 
 export type AlgorithmRendererProps = {
   searchParams: Record<string, string | undefined> | undefined;
@@ -22,6 +23,9 @@ export function AlgorithmRenderer({
       )}
       {selectedAlgorithm === Algorithms.subgraph && (
         <SubgraphSelect people={people} {...searchParams} />
+      )}
+      {selectedAlgorithm === Algorithms.betweenessCentrality && (
+        <ToggleSearch items={["all", "subgraph"]} label="show" />
       )}
     </>
   );

@@ -38,7 +38,7 @@ export function AlgorithmPicker({ children }: { children: ReactNode }) {
         options={options}
       />
     ),
-    [selectedAlgorithm]
+    [selectedAlgorithm, searchParams]
   );
 
   return (

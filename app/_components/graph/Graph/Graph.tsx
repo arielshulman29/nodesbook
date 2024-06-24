@@ -9,6 +9,7 @@ import { styleSheet } from "./config";
 import fcoseLayout from "./layouts/fcose";
 import useSearch from "@/app/_hooks/useSearch";
 import { Algorithms } from "../GraphControl/Algorithm/AlgorithmPicker/algorithms";
+import { Person } from "@/app/_schemas/Person";
 
 cytoscape.use(fcose);
 
@@ -112,6 +113,13 @@ export default function Graph({
   );
   const layout = fcoseLayout;
   layout.nodeRepulsion = () => 300 * society.nodes.length;
+  cyRef.current?.on("select", "node", () => {
+    const node: { data: Person } = cyRef?.current
+      ?.elements("node:selected")
+      .jsons()?.[0];
+    console.log(node);
+    setSearch([{ key: "personId", value: node.data.id }]);
+  });
 
   useEffect(() => {
     if (!cyRef.current?.nodes().length) return;

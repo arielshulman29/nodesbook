@@ -1,10 +1,8 @@
 .button{
     padding: 1%;
-    color: white;
+    color: var(--primary);
     background-color: transparent;
     border-radius: 4px;
-    cursor:pointer;
-    display: inline;
 }
 .button:hover {
     background-color: var(--main-hover);

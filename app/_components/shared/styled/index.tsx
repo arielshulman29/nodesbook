@@ -25,6 +25,9 @@ export const Row = ({ children }: { children: ReactNode }) => (
 export const FixedToBottom = ({ children }: { children: ReactNode }) => (
   <div className={styles.fixedToBottom}>{children}</div>
 );
+export const FixedToBottomRight = ({ children }: { children: ReactNode }) => (
+  <div className={styles.fixedToBottomRight}>{children}</div>
+);
 export const Label = ({ children }: { children: ReactNode }) => (
   <span className={styles.label}>{children}</span>
 );

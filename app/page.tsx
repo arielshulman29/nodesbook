@@ -6,6 +6,7 @@ import { searchParamsParser } from "./_components/graph/GraphControl/Algorithm/s
 import { Algorithms } from "./_components/graph/GraphControl/Algorithm/AlgorithmPicker/algorithms";
 import { isBackup } from "./_utils/neo4j";
 import { FullScreen } from "./_components/shared/styled";
+import { PersonProfilePopup } from "./_components/shared/Profile/Profile";
 
 async function getGraphPropsFromSearchParams(
   searchParams: Record<string, string | string[] | undefined>
@@ -66,6 +67,10 @@ export default async function GraphPage({
     <FullScreen>
       <GraphControl searchParams={searchParams} />
       <AlgorithmPopupRenderer searchParams={searchParams} />
+      <PersonProfilePopup
+        personId={searchParams?.["personId"]}
+        isBackup={isBackup(searchParams)}
+      />
       <Graph
         society={society}
         key={`${isBackup(searchParams)}`}

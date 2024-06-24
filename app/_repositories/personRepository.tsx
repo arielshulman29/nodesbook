@@ -99,6 +99,21 @@ export class PersonRepository {
     return tsx.records[0].toObject()["people"];
   }
 
+  async getPerson(personId: string): Promise<Person[] | null> {
+    const { session } = await this.#getSession();
+    try {
+      const tsx = await session.executeRead((tsx) => {
+        return tsx.run<{ person: Person[] }>(
+          `MATCH(person:Person{id:$personId}) RETURN collect(properties(person)) as person`,
+          { personId }
+        );
+      });
+      return tsx.records[0].toObject()["person"];
+    } catch (err) {
+      return null;
+    }
+  }
+
   async getFriendsSubgraph(personId: string, level: number): Promise<Person[]> {
     const { session } = await this.#getSession();
     const tsx = await session.executeRead((tsx) => {

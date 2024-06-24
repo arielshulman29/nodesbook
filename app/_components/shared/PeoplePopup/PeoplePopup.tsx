@@ -1,8 +1,5 @@
-import Link from "next/link";
 import { Person } from "@/app/_schemas/Person";
-import { CopyButton } from "@/app/_components/shared/CopyButton/CopyButton";
 import {
-  Container,
   FixedToBottom,
   ItemContainer,
   StyledWrapper,
@@ -10,23 +7,22 @@ import {
   Label,
 } from "../styled";
 import { Popover } from "../Popover/Popover";
-import { PersonIcon } from "@radix-ui/react-icons";
+import { PersonIcon, Share1Icon } from "@radix-ui/react-icons";
+import { ProfileButton } from "../ProfileButton/ProfileButton";
 
 export type PeoplePopupProps = { people: Person[] };
 
 export async function PeoplePopup({ people }: PeoplePopupProps) {
   return (
     <FixedToBottom>
-      <Popover icon={<PersonIcon />}>
+      <Popover icon={<Share1Icon />}>
         <ItemContainer>
           <Flex>
             {people.length ? (
               people.map((person) => (
                 <StyledWrapper key={person.id}>
-                  <Link href={`/?user_id=${person.id}`}>
-                    {person.name} ({person.company})
-                  </Link>
-                  <CopyButton value={person.name} />
+                  {person.name} ({person.company})
+                  <ProfileButton personId={person.id} />
                 </StyledWrapper>
               ))
             ) : (

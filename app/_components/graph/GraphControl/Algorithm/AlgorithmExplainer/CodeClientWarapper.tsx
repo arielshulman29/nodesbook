@@ -1,7 +1,7 @@
 "use client";
 
 import { Container } from "@/app/_components/shared/styled";
-import { CodeBlock } from "react-code-blocks";
+import { CodeBlock, dracula } from "react-code-blocks";
 
 export type CodeProps = {
   text: string;
@@ -9,5 +9,9 @@ export type CodeProps = {
 };
 
 export const Code = ({ text, language }: CodeProps) => {
-  return <CodeBlock text={text} language={language} />;
+  return (
+    <div style={{ fontSize: "12px" }}>
+      <CodeBlock text={text} language={language} theme={dracula} />
+    </div>
+  );
 };

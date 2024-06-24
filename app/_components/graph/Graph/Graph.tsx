@@ -114,11 +114,11 @@ export default function Graph({
   const layout = fcoseLayout;
   layout.nodeRepulsion = () => 300 * society.nodes.length;
   cyRef.current?.on("select", "node", () => {
-    const node: { data: Person } = cyRef?.current
+    const node = cyRef?.current
       ?.elements("node:selected")
-      .jsons()?.[0];
+      .jsons()?.[0] as unknown as { data: Person };
     console.log(node);
-    setSearch([{ key: "personId", value: node.data.id }]);
+    if (node?.data) setSearch([{ key: "personId", value: node.data.id }]);
   });
 
   useEffect(() => {

@@ -28,11 +28,12 @@ export function AlgorithmExplainer({
       <Popover icon={<CodeIcon />}>
         <Box>
           <Code text={code[selectedAlgorithm]} language="js" />
-          <Label>
-            <h3>{toCamelCase(algorithm)}</h3>
-          </Label>
+
           <br />
-          <Paragraph>{explanations[selectedAlgorithm]}</Paragraph>
+          <Paragraph>
+            <h2>{toCamelCase(algorithm)}</h2>
+            {explanations[selectedAlgorithm]}
+          </Paragraph>
         </Box>
       </Popover>
     );

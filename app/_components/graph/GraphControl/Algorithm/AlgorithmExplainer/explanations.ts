@@ -23,7 +23,6 @@ export const code: Record<Algorithms, string> = {
     RETURN gds.util.asNode(nodeId).name AS name, score
     ORDER BY name ASC\`);
     });
-    return tsx.records[0].toObject()["shortestPath"].map((validPerson)=>validPerson.properties);
 } `,
   [Algorithms.shortestPath]: `
   async getShortestPath(fromId, toId) {
@@ -33,13 +32,13 @@ export const code: Record<Algorithms, string> = {
         return tsx.run(\`
     MATCH(fromPerson:Person{id:$fromId})
     MATCH(toPerson:Person{id:$toId})
-    WITH shortestPath((fromPerson)-[*..8]-(toPerson)) as p
+  WITH shortestPath((fromPerson)-[*..8]-(toPerson)) as p
     RETURN coalesce(nodes(p),[]) as shortestPath\`, {
             fromId,
             toId
         });
     });
-    return tsx.records[0].toObject()["shortestPath"].map((validPerson)=>validPerson.properties);
+    return tsx.records[0].toObject()["shortestPath"];
   }`,
   [Algorithms.subgraph]: `async getFriendsSubgraph(personId, level) {
     const { session } = await this.#getSession();
@@ -52,6 +51,6 @@ export const code: Record<Algorithms, string> = {
             personId
         });
     });
-    return tsx.records[level - 1].toObject()["friendsCircles"].map((validPerson)=>validPerson.properties);
+    return tsx.records[level - 1].toObject()["friendsCircles"];
 }`,
 };

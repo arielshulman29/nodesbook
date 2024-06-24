@@ -67,12 +67,12 @@ input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #214167;
+  color: var(--background);
   background-color: white;
   box-shadow: 0 2px 10px var(--black-a7);
 }
 .IconButton:hover {
-  background-color: var(--violet-3);
+  background-color: rgb(168, 219, 249);
 }
 .IconButton:focus {
   box-shadow: 0 0 0 2px black;

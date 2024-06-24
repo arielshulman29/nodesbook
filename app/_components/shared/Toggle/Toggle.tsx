@@ -6,12 +6,14 @@ import useSearch from "@/app/_hooks/useSearch";
 export type ToggleProps = {
   label: string;
   items: string[];
+  current: string;
   replace?: boolean;
 };
 
 export const ToggleSearch = ({
   items,
   label,
+  current,
   replace = false,
 }: ToggleProps) => {
   const { setSearch, replaceSearch } = useSearch();
@@ -20,6 +22,7 @@ export const ToggleSearch = ({
       className="ToggleGroup"
       type="single"
       aria-label="Text alignment"
+      value={current}
       onValueChange={(value) => {
         if (replace) {
           replaceSearch([{ key: label, value }]);

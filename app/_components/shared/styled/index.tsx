@@ -29,7 +29,7 @@ export const Label = ({ children }: { children: ReactNode }) => (
   <span className={styles.label}>{children}</span>
 );
 export const Paragraph = ({ children }: { children: ReactNode }) => (
-  <span className={styles.pharagraph}>{children}</span>
+  <span className={styles.paragraph}>{children}</span>
 );
 export const ScrollableSmall = ({ children }: { children: ReactNode }) => (
   <span className={styles.scroll}>{children}</span>

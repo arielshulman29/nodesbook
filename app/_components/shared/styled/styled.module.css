@@ -30,8 +30,8 @@
  }
 }
 
-.pharagraph {
-  color: var(--main);
+.paragraph {
+  color: white;
   white-space: pre-line;
 } 
 

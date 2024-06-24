@@ -6,7 +6,7 @@ import useSearch from "@/app/_hooks/useSearch";
 export type ToggleProps = {
   label: string;
   items: string[];
-  current: string;
+  current?: string;
   replace?: boolean;
 };
 
